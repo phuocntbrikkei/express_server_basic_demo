@@ -1,9 +1,10 @@
 import express from 'express';
 import { CategoryModel } from '../models/category.model.js';
+import { test_middleware } from '../middlewares/test.middleware.js';
 const router = express.Router();
 
 
-router.get("/", async (req, res) => {
+router.get("/", test_middleware ,async (req, res) => {
     let data = await CategoryModel.findAll()
     res.json(data)
 })
