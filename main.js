@@ -2,6 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import api from './api.js'
 import cors from 'cors'
+import dotenv from 'dotenv'
+dotenv.config({
+  quiet: true
+})
+
 import { test_err_test_middleware } from './middlewares/test.middleware.js';
 
 const app = express()

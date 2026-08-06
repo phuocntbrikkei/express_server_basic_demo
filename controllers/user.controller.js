@@ -1,7 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
-import cloudinary from 'cloudinary'
+import {CloudInarySer} from '../external_services/CloudinaryService.js'
 const router = express.Router();
 
 
@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 
 
-const upload = multer({storage: storage });
+const upload = multer({ storage: storage });
 
 
 const uploadMiddleware = upload.fields([
@@ -25,30 +25,23 @@ const uploadMiddleware = upload.fields([
 ]);
 
 
-let CLOUDINARY_CLOUD_NAME="sap1zgnn"
-let CLOUDINARY_API_KEY="175113823546374"
-let CLOUDINARY_API_SECRET="A5qEQPGrVpFUynsopxL9Mr8bX9A"
-
-cloudinary.v2.config({
-  cloud_name: CLOUDINARY_CLOUD_NAME,
-  api_key: CLOUDINARY_API_KEY,
-  api_secret: CLOUDINARY_API_SECRET,
-});
-
 router.post("/upload-avatar", uploadMiddleware, async (req, res) => {
-    console.log("đã vào files",  req.files.avt[0].path)
+  try {
     let targetPath = req.files.avt[0].path
 
-     const result = await cloudinary.v2.uploader.upload(targetPath, {
+    const result = await CloudInarySer.uploader.upload(targetPath, {
       folder: "/users/images",
     });
-
-    console.log("result", result)
+    
+    fs.unlinkSync(targetPath)
+  } catch (err) {
+    console.log("lỗi", err)
+  }
 
 })
 
 function getTypeFileByMimetype(mimetype) {
-    return "." + mimetype.split("/")[mimetype.split("/").length - 1]
+  return "." + mimetype.split("/")[mimetype.split("/").length - 1]
 }
 
 export default router;
