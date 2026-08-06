@@ -16,10 +16,10 @@ jobs:
       - name: SSH Deploy
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: ${{ secrets.SSH_HOST }}
+          host: 103.75.182.135
           port: 22
           username: root
-          password: ${{ secrets.SSH_PASSWORD }}
+          password: jshcm123aA@
           script: |
             # 1. Chuyển vào thư mục dự án
             cd /var/www/express_server_basic_demo || exit 1
