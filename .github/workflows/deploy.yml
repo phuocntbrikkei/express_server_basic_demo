@@ -1,0 +1,33 @@
+name: Deploy Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: 103.75.182.135
+          port: 22
+          username: root
+          password: jshcm123aA@
+          script: |
+            cd /var/www/express_server_basic_demo
+            git pull origin master
+
+            echo "Khởi động lại PM2..."
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+            npm install
+            pm2 delete all
+            pm2 start main.js

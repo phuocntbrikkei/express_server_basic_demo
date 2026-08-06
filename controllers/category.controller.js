@@ -4,7 +4,7 @@ import { test_middleware } from '../middlewares/test.middleware.js';
 const router = express.Router();
 
 
-router.get("/", test_middleware ,async (req, res) => {
+router.get("/" ,async (req, res) => {
     let data = await CategoryModel.findAll()
     res.json(data)
 })
