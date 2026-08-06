@@ -2,10 +2,10 @@ import { PrismaClient } from "./generated/client.js";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 
 const adapter = new PrismaMariaDb({
-  host: "localhost",
+  host: "103.75.182.135",
   port: 3306,
-  user: "root",
-  password: "",
+  user: "jshcm",
+  password: "jshcm",
   database: "test_express_db"
 });
 
